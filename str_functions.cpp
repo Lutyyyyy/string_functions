@@ -14,6 +14,15 @@ char    *my_fgets   (char *s, int size, FILE *stream);
 char    *my_strcat  (char *dest, const char *src);
 char    *my_strncat (char *dest, const char *src, size_t n);
 
+int main ()
+{
+    char s[100];
+    FILE* file = fopen ("test.txt", "r");
+    printf ("%s\n", fgets (s, 15, file));
+    fclose (file);
+    return 0;
+}
+
 
 int my_puts (const char *s)
 {
@@ -110,7 +119,7 @@ char *my_fgets (char *s, int size, FILE *stream)
         return NULL;
     
     size_t i = 0;
-    while (i < size - 1)
+    while (i < size - 1 && s[i] != EOF)
     {
         s[i] = getc (stream);
 
@@ -119,12 +128,10 @@ char *my_fgets (char *s, int size, FILE *stream)
             s[++i] = '\0';
             return s;
         }
-        else if (s[i] == EOF)
-            return NULL;
         else
             i++;
     }
-    
+    s[i] = '\0';
     return s;
 }
 
